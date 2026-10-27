@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Edit student · SignaLab{% endblock %}{% block content %}
+<div class="heading"><div><h1>Edit student</h1><p class="muted">Update the registered student's details.</p></div><a href="{{url_for('student_detail',student_id=student.id)}}">← Back to student</a></div>
+<section class="card"><form method="post" class="stackform"><input type="hidden" name="csrf" value="{{csrf}}"><label>Student name<input name="name" value="{{student.name}}" maxlength="120" required></label><label>Roll number<input name="roll_no" value="{{student.roll_no}}" maxlength="80" required></label><div class="actions"><button type="submit">Save changes</button><a class="button ghost" href="{{url_for('student_detail',student_id=student.id)}}">Cancel</a></div></form></section>
+{% endblock %}

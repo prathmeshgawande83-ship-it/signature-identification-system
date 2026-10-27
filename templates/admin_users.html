@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Account Management · SignaLab{% endblock %}
+{% block content %}
+<section class="hero-row"><div><span class="pill">ADMIN CONSOLE</span><h1>Account management</h1><p class="lead">Manage who can access the full SignaLab administration workspace.</p></div></section>
+<section class="panel"><div class="panel-heading"><div><h2>Registered accounts</h2><p class="muted">New signups start with regular-user access. Promote only trusted accounts.</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Created</th><th>Action</th></tr></thead><tbody>
+{% for user in users %}<tr><td>{{ user.name }}</td><td>{{ user.email }}</td><td><span class="pill">{{ user.role|title }}</span></td><td>{{ user.created_at }}</td><td>{% if user.role == 'admin' %}<form method="post" action="{{ url_for('manage_users') }}" onsubmit="return confirm('Remove admin access from this account?')"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="user_id" value="{{ user.id }}"><input type="hidden" name="action" value="demote"><button class="button secondary" type="submit">Make user</button></form>{% else %}<form method="post" action="{{ url_for('manage_users') }}" onsubmit="return confirm('Grant full admin access to this account?')"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="user_id" value="{{ user.id }}"><input type="hidden" name="action" value="promote"><button class="button primary" type="submit">Make admin</button></form>{% endif %}</td></tr>{% else %}<tr><td colspan="5">No registered accounts yet.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}
